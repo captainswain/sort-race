@@ -52,7 +52,7 @@ $(function () {
     var tempMerge = new Array();
     var mergeDepth = 0;
     var i_m = 0;
-    var j = 0;
+    var j_m = 0;
     var k_m = 0;
     var d1 = false;
     //
@@ -76,7 +76,7 @@ $(function () {
                 if (d1 == true) {
                     i_m = Math.floor((i_m + 1) / 2);
                 }
-                j = 0;
+                j_m = 0;
                 k_m = 0;
                 d1 = true
                 mergeDepth = 2;
@@ -89,8 +89,8 @@ $(function () {
         }
         if (mergeDepth == 2) {
             if (k_m < i_m) {
-                tempMerge[j] = merge(tempMerge[k_m], tempMerge[k_m + 1]);
-                j++;
+                tempMerge[j_m] = merge(tempMerge[k_m], tempMerge[k_m + 1]);
+                j_m++;
                 k_m += 2;
             } else {
                 mergeDepth = 1;
