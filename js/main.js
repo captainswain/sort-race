@@ -50,11 +50,13 @@ $(function () {
     mergeFirstRun = true;
     mergeIndex = 0;
     var tempMerge = new Array();
+    var isMerge = false;
     var mergeDepth = 0;
     var i_m = 0;
     var j_m = 0;
     var k_m = 0;
     var d1 = false;
+    var ar = new Array();
     //
 
     function mergeSortStep(array) {
@@ -72,6 +74,7 @@ $(function () {
         }
 
         if (mergeDepth == 1) {
+            ar = [];
             if (i_m > 1) {
                 if (d1 == true) {
                     i_m = Math.floor((i_m + 1) / 2);
@@ -89,30 +92,28 @@ $(function () {
         }
         if (mergeDepth == 2) {
             if (k_m < i_m) {
-                tempMerge[j_m] = merge(tempMerge[k_m], tempMerge[k_m + 1]);
-                j_m++;
-                k_m += 2;
+                if (tempMerge[k_m].length > 0 && tempMerge[k_m + 1].length > 0) {
+                    if (tempMerge[k_m][0] < tempMerge[k_m + 1][0]) {
+                        ar.push(tempMerge[k_m].shift());
+                    } else {
+                        ar.push(tempMerge[k_m + 1].shift());
+                    }
+                } else {
+                    ar = ar.concat(tempMerge[k_m]);
+                    ar = ar.concat(tempMerge[k_m + 1]);
+                    tempMerge[j_m] = ar;
+                    ar = [];
+                    j_m++;
+                    k_m += 2;
+                }
             } else {
+                ar = [];
                 mergeDepth = 1;
             }
         }
         if (!mergeSortComplete) {
             $('div.merge-results').append("[" + tempMerge[0].toString() + "]<br>");
         }
-    }
-
-    function merge(l, r) {
-        var ar = new Array();
-        while (l.length > 0 && r.length > 0) {
-            if (l[0] < r[0]) {
-                ar.push(l.shift());
-            } else {
-                ar.push(r.shift());
-            }
-        }
-        ar = ar.concat(l);
-        ar = ar.concat(r);
-        return ar
     }
 
     // -------------------- End merge sort ----------------------------
