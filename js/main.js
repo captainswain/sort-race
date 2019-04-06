@@ -37,9 +37,11 @@ $(function () {
     function raceManager() {
         var MergeSortArray = example_inputs[randIndex];
         var insertionArray = example_inputs[randIndex];
+        var quickArray = example_inputs[randIndex];
         while (!mergeSortComplete && !quickSortComplete && !insertSortComplete) {
             mergeSortStep(MergeSortArray);
             insertionSort(insertionArray);
+            quickSort(quickArray);
 
         }
     }
@@ -164,6 +166,42 @@ $(function () {
 
     }
     // -------------------------- End insertion sort ----------------------------
+    // -------------------------- Start insertion sort --------------------------
+    function quickSort(arr, left, right){
+
+       var len = arr.length, pivot, partitionIndex;
+
+       if(left < right){
+          pivot = right;
+          partitionIndex = partition(arr, pivot, left, right);
+
+          //sort left and right
+          quickSort(arr, left, partitionIndex - 1);
+          quickSort(arr, partitionIndex + 1, right);
+
+        }
+    $('div.quick-results').append("[" + arr.toString() + "]<br>");
+    return arr;
+  }
+  function partition(arr, pivot, left, right){
+      var pivotValue = arr[pivot],
+      partitionIndex = left;
+
+      for(var i = left; i < right; i++){
+          if(arr[i] < pivotValue){
+            swap(arr, i, partitionIndex);
+            partitionIndex++;
+          }
+      }
+      swap(arr, right, partitionIndex);
+      return partitionIndex;
+  }
+  function swap(arr, i, j){
+     var temp = arr[i];
+     arr[i] = arr[j];
+     arr[j] = temp;
+  }
+
     // Show selected input
     $('div.chosen-array').html("<b>Chosen Input: </b> [" + example_inputs[randIndex].toString() + "]");
 
