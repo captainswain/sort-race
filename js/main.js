@@ -35,11 +35,11 @@ $(function () {
     var insertSortComplete = false;
 
     function raceManager() {
-        var raceComplete = false;
         var MergeSortArray = example_inputs[randIndex];
-        var count = 0;
+        var insertionArray = example_inputs[randIndex];
         while (!mergeSortComplete && !quickSortComplete && !insertSortComplete) {
             mergeSortStep(MergeSortArray);
+            insertionSort(insertionArray);
 
         }
     }
@@ -117,6 +117,52 @@ $(function () {
 
     // -------------------- End merge sort ----------------------------
 
+    // -------------------------- Start insertion sort --------------------------
+    var current = 1;
+    var saveit = 0;
+    var smallest = 0;
+    var insertionDepth = 0;
+    var insertionFirstRun = true;
+    var firstInsIteration = true;
+
+    function insertionSort(array) {
+        if (insertionFirstRun) {
+            smallest = array[0];
+            insertionFirstRun = false
+            insertionDepth = 1;
+        }
+
+        if (insertionDepth == 1) {
+            if (current < array.length) {
+                saveit = array[current];
+                smallest = current - 1;
+
+                if (!firstInsIteration) {
+                    current++
+                }
+                firstInsIteration = false;
+                insertionDepth = 2;
+            } else {
+                console.log("complete!");
+                insertSortComplete = true;
+                $('div.insertion-results').append("<b>Complete!</b> <br>[" + array.toString() + "]<br>");
+                return array;
+            }
+        }
+
+        if (insertionDepth == 2) {
+            if (smallest >= 0 && array[smallest] > saveit) {
+                array[smallest + 1] = array[smallest];
+                smallest = smallest - 1;
+            } else {
+                insertionDepth = 1;
+                array[smallest + 1] = saveit;
+                $('div.insertion-results').append("[" + array.toString() + "]<br>");
+            }
+        }
+
+    }
+    // -------------------------- End insertion sort ----------------------------
     // Show selected input
     $('div.chosen-array').html("<b>Chosen Input: </b> [" + example_inputs[randIndex].toString() + "]");
 
