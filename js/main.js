@@ -46,8 +46,8 @@ $(function () {
         }
     }
 
-
-    // -------------------------- Start merge sort ----------------------------
+    // -----------------------------------------------------------------------------//
+    //------------------------------ Start Merge Sort ------------------------------//
     // global variables to  keep state for function
     mergeFirstRun = true;
     mergeIndex = 0;
@@ -117,10 +117,9 @@ $(function () {
             $('div.merge-results').append("[" + tempMerge[0].toString() + "]<br>");
         }
     }
-
-    // -------------------- End merge sort ----------------------------
-
-    // -------------------------- Start insertion sort --------------------------
+    //------------------------------- End Merge Sort -------------------------------//
+    // -----------------------------------------------------------------------------//
+    //---------------------------- Start Insertion Sort ----------------------------//
     var current = 1;
     var saveit = 0;
     var smallest = 0;
@@ -165,9 +164,12 @@ $(function () {
         }
 
     }
-    // -------------------------- End insertion sort ----------------------------
-    
-    // -------------------------- Start quick sort --------------------------
+    // ---------------------------- End Insertion sort -----------------------------//
+    // -----------------------------------------------------------------------------//
+    //------------------------------ Start Quick Sort ------------------------------//
+    var quickDepth = 0;
+    var quickFirstRun = true;
+	var i; 
     function quickSort(arr, left, right){
 
        var len = arr.length, pivot, partitionIndex;
@@ -179,7 +181,18 @@ $(function () {
           //sort left and right
           quickSort(arr, left, partitionIndex - 1);
           quickSort(arr, partitionIndex + 1, right);
-
+			
+			for ( i = 0; i < arr.length - 1; i++){
+				if (arr[i] > arr[i+1]) {
+					break; 
+				}
+				else if (arr[i] < arr[i+1]) {
+					console.log("complete!");
+					quickSortComplete = true;
+					$('div.quick-results').append("<b>Complete!</b> <br>[" + arr.toString() + "]<br>");
+					return arr; 
+				}
+			}
         }
     $('div.quick-results').append("[" + arr.toString() + "]<br>");
     return arr;
@@ -187,9 +200,25 @@ $(function () {
   function partition(arr, pivot, left, right){
       var pivotValue = arr[pivot],
       partitionIndex = left;
+      
+      var i = left;
+      if(quickFirstRun){
+          if (i<right){
+            if(arr[i] < pivotValue){
+                swap(arr, i, partitionIndex);
+                partitionIndex++;
+              }
 
-      for(var i = left; i < right; i++){
-          if(arr[i] < pivotValue){
+          }
+      }
+      if(quickDepth == 0 && i < right){
+        if(arr[i] < pivotValue){
+            swap(arr, i, partitionIndex);
+            partitionIndex++;
+          }
+      }
+      if(quickDepth == 1 && i < right){
+        if(arr[i] < pivotValue){
             swap(arr, i, partitionIndex);
             partitionIndex++;
           }
@@ -202,15 +231,14 @@ $(function () {
      arr[i] = arr[j];
      arr[j] = temp;
   }
-// -------------------------- End quick sort --------------------------
+    //------------------------------- End Quick Sort -------------------------------//  
+    // -----------------------------------------------------------------------------//
+
     // Show selected input
     $('div.chosen-array').html("<b>Chosen Input: </b> [" + example_inputs[randIndex].toString() + "]");
-
 
     // show original in all cols
     $('div.og-array').html("[" + example_inputs[randIndex].toString() + "]");
 
     raceManager();
-
-
 });
