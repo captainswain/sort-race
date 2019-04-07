@@ -166,7 +166,8 @@ $(function () {
 
     }
     // -------------------------- End insertion sort ----------------------------
-    // -------------------------- Start insertion sort --------------------------
+    
+    // -------------------------- Start quick sort --------------------------
     function quickSort(arr, left, right){
 
        var len = arr.length, pivot, partitionIndex;
@@ -201,7 +202,7 @@ $(function () {
      arr[i] = arr[j];
      arr[j] = temp;
   }
-
+// -------------------------- End quick sort --------------------------
     // Show selected input
     $('div.chosen-array').html("<b>Chosen Input: </b> [" + example_inputs[randIndex].toString() + "]");
 
